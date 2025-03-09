@@ -10,15 +10,444 @@
     <div class="container">
         <header>
             <h1>Surgical Journey Visualization</h1>
-            <p class="subtitle">Experience a personalized surgical journey based on Korean healthcare data</p>
+            <p class="subtitle">Based on the Korean Healthcare Dataset</p>
         </header>
         
-        <section id="input-section">
-            <!-- Form for user inputs will go here -->
+        <!-- Step 1: Introduction -->
+        <section id="intro-section" class="step-section active">
+            <div class="card">
+                <h2>Welcome to the Surgical Journey Visualization</h2>
+                <div class="intro-content">
+                    <p>This interactive visualization is based on data from <a href="https://vitaldb.net/dataset/" target="_blank">VitalDB</a>, a comprehensive dataset of 6,388 surgical patients composed of intraoperative biosignals and clinical information.</p>
+                    
+                    <p>The biosignal data included in the dataset is high quality data such as 500 Hz waveform signals and numeric values at intervals of 1-7 seconds. More than 60 surgery-related clinical information is also provided to help interpret the signals.</p>
+                    
+                    <div class="dataset-info">
+                        <h3>Dataset Summary</h3>
+                        <ul>
+                            <li>The data was obtained from non-cardiac (general, thoracic, urologic, and gynaecologic) surgery patients who underwent routine or emergency surgery in 10 out of 31 operating rooms of Seoul National University Hospital, Seoul, Republic of Korea.</li>
+                            <li>The acquisition and release of the data was approved by the Institutional Review Board of Seoul National University Hospital (H-1408-101-605). The study was also registered at clinicaltrials.gov (NCT02914444).</li>
+                            <li>Case files were recorded in the form of vital files using Vital Recorder version 1.7.4. Each case file contains high-resolution data with a time resolution of 500 Hz for wave data and 1-7 seconds for numeric data, with an average of 2.8 million data points per case.</li>
+                            <li>The dataset consists of a total of 557,622 (average 87, range 16-136) data tracks from 6,388 cases.</li>
+                        </ul>
+                    </div>
+                    
+                    <p>In this visualization, you'll create a virtual patient profile and experience a simulated surgical journey based on real clinical data. You'll see how different factors affect vital signs, surgical outcomes, and recovery.</p>
+                    
+                    <div class="citation">
+                        <h4>Citation</h4>
+                        <p>If you use the VitalDB open dataset in your research, please cite the following publication:</p>
+                        <p><em>Lee HC, Park Y, Yoon SB, Yang SM, Park D, Jung CW. VitalDB, a high-fidelity multi-parameter vital signs database in surgical patients. Sci Data. 2022 Jun 8;9(1):279. doi: 10.1038/s41597-022-01411-5. PMID: 35676300; PMCID: PMC9178032.</em></p>
+                    </div>
+                </div>
+                <button id="start-journey-btn" class="primary-btn">Let's Get Started</button>
+            </div>
         </section>
         
-        <section id="visualization-section">
-            <!-- The D3 visualization will go here -->
+        <!-- Step 2: Age Input -->
+        <section id="age-section" class="step-section">
+            <div class="card">
+                <h2>Step 1: Your Age</h2>
+                <p class="step-description">Age is an important factor in surgical outcomes. In our dataset, the average patient age was 59 years.</p>
+                
+                <div class="form-group">
+                    <label for="age">How old are you?</label>
+                    <input type="number" id="age" name="age" min="18" max="100" required>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="intro-section">Back</button>
+                    <button class="next-btn" data-next="gender-section">Next</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Step 3: Gender Input -->
+        <section id="gender-section" class="step-section">
+            <div class="card">
+                <h2>Step 2: Your Gender</h2>
+                <p class="step-description">Biological sex affects surgical outcomes and determines certain department options. In our dataset, 50.8% of patients were male.</p>
+                
+                <div class="form-group">
+                    <label for="sex">What is your gender?</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Select...</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="age-section">Back</button>
+                    <button class="next-btn" data-next="height-section">Next</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Step 4: Height Input -->
+        <section id="height-section" class="step-section">
+            <div class="card">
+                <h2>Step 3: Your Height</h2>
+                <p class="step-description">Height is used to calculate BMI, which influences surgical risk. In our dataset, the average height was 162 cm (5'4").</p>
+                
+                <div class="form-group">
+                    <label>How tall are you?</label>
+                    <div class="imperial-inputs">
+                        <select id="feet" name="feet" required>
+                            <option value="">ft</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                        </select>
+                        <select id="inches" name="inches" required>
+                            <option value="">in</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                        </select>
+                        <input type="hidden" id="height" name="height">
+                    </div>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="gender-section">Back</button>
+                    <button class="next-btn" data-next="weight-section">Next</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Step 5: Weight Input -->
+        <section id="weight-section" class="step-section">
+            <div class="card">
+                <h2>Step 4: Your Weight</h2>
+                <p class="step-description">Weight is used to calculate BMI, which impacts surgical risk factors. In our dataset, the average weight was 61 kg (134 lbs).</p>
+                
+                <div class="form-group">
+                    <label for="weight-lb">How much do you weigh? (lbs)</label>
+                    <input type="number" id="weight-lb" name="weight-lb" min="70" max="400" required>
+                    <input type="hidden" id="weight" name="weight">
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="height-section">Back</button>
+                    <button class="next-btn" data-next="department-section">Next</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Step 6: Department Selection -->
+        <section id="department-section" class="step-section">
+            <div class="card">
+                <h2>Step 5: Surgical Department</h2>
+                <p class="step-description">Great, thanks for entering your basic details. Your surgical department options are as follows. Please choose the one that interests you the most:</p>
+                
+                <div class="department-options">
+                    <div id="department-cards" class="department-cards">
+                        <!-- Department cards will be generated dynamically -->
+                    </div>
+                </div>
+                
+                <div class="department-description" id="department-description">
+                    <p>Please select a department to see the description.</p>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="weight-section">Back</button>
+                    <button class="next-btn" data-next="approach-section" disabled>Next</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Step 7: Approach Selection -->
+        <section id="approach-section" class="step-section">
+            <div class="card">
+                <h2>Step 6: Surgical Approach</h2>
+                <p class="step-description">The surgical approach determines how the procedure is performed and affects recovery time.</p>
+                
+                <div class="approach-options">
+                    <div id="approach-cards" class="approach-cards">
+                        <!-- Approach cards will be generated dynamically -->
+                    </div>
+                </div>
+                
+                <div class="approach-description" id="approach-description">
+                    <p>Please select an approach to see the description.</p>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="department-section">Back</button>
+                    <button class="next-btn" data-next="anesthesia-section" disabled>Next</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Step 8: Anesthesia Selection -->
+        <section id="anesthesia-section" class="step-section">
+            <div class="card">
+                <h2>Step 7: Anesthesia Type</h2>
+                <p class="step-description">What type of anesthesia would you prefer for your surgery?</p>
+                
+                <div class="anesthesia-options">
+                    <div id="anesthesia-cards" class="anesthesia-cards">
+                        <!-- Anesthesia cards will be generated dynamically -->
+                    </div>
+                </div>
+                
+                <div class="anesthesia-description" id="anesthesia-description">
+                    <p>Please select an anesthesia type to see the description.</p>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="approach-section">Back</button>
+                    <button class="next-btn" data-next="asa-section" disabled>Next</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Step 9: ASA Status -->
+        <section id="asa-section" class="step-section">
+            <div class="card">
+                <h2>Step 8: ASA Physical Status</h2>
+                <p class="step-description">Almost done! Lastly, please select the ASA physical status you would like your patient to have:</p>
+                
+                <div class="asa-options">
+                    <div id="asa-cards" class="asa-cards">
+                        <div class="asa-card" data-asa="1">
+                            <h3>ASA I</h3>
+                            <p>Normal healthy patient</p>
+                            <ul>
+                                <li>No organic, physiologic, or psychiatric disturbances</li>
+                                <li>Excludes very young and very old</li>
+                                <li>Healthy with good exercise tolerance</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="asa-card" data-asa="2">
+                            <h3>ASA II</h3>
+                            <p>Patient with mild systemic disease</p>
+                            <ul>
+                                <li>No functional limitations</li>
+                                <li>Examples: controlled hypertension, controlled diabetes, obesity (BMI < 40), mild lung disease</li>
+                                <li>Current smoker, social alcohol drinker</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="asa-card" data-asa="3">
+                            <h3>ASA III</h3>
+                            <p>Patient with severe systemic disease</p>
+                            <ul>
+                                <li>Some functional limitation</li>
+                                <li>Examples: poorly controlled diabetes or hypertension, COPD, morbid obesity (BMI ≥ 40), active hepatitis</li>
+                                <li>Significant impact on daily life</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="asa-card" data-asa="4">
+                            <h3>ASA IV</h3>
+                            <p>Patient with severe systemic disease that is a constant threat to life</p>
+                            <ul>
+                                <li>Examples: recent MI, CVA, ongoing cardiac ischemia, severe valve dysfunction, sepsis, DIC, ARF</li>
+                                <li>Significant risk of death</li>
+                                <li>Major functional limitations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <input type="hidden" id="asa" name="asa">
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="anesthesia-section">Back</button>
+                    <button class="next-btn" data-next="summary-section" disabled>Next</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Step 10: Summary & Begin -->
+        <section id="summary-section" class="step-section">
+            <div class="card">
+                <h2>Your Virtual Patient Profile</h2>
+                <p class="step-description">Here's a summary of your virtual patient profile:</p>
+                
+                <div class="patient-summary" id="patient-profile-summary">
+                    <!-- Summary will be filled dynamically -->
+                </div>
+                
+                <div class="journey-begin">
+                    <h3>Let's Begin Your Surgical Journey!</h3>
+                    <p>Click the button below to start your personalized surgical experience based on real healthcare data.</p>
+                    <button id="begin-visualization-btn" class="primary-btn">Begin Surgical Journey</button>
+                </div>
+                
+                <div class="step-navigation">
+                    <button class="back-btn" data-prev="asa-section">Back</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Journey Container (existing visualization) -->
+        <section id="journey-container" style="display: none;">
+            <div class="navigation">
+                <div class="timeline">
+                    <div class="timeline-step active" data-stage="pre">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-label">Pre-Op</div>
+                    </div>
+                    <div class="timeline-line"></div>
+                    <div class="timeline-step" data-stage="during">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-label">Surgery</div>
+                    </div>
+                    <div class="timeline-line"></div>
+                    <div class="timeline-step" data-stage="post">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-label">Post-Op</div>
+                    </div>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button id="prev-btn" disabled>Previous</button>
+                    <button id="next-btn">Next</button>
+                </div>
+            </div>
+            
+            <div class="stages">
+                <div id="pre-op" class="stage active">
+                    <h2>Pre-Operation</h2>
+                    <div class="stage-description">
+                        <p>You are being prepared for surgery. The medical team is monitoring your vital signs and preparing you for anesthesia.</p>
+                    </div>
+                    
+                    <div class="patient-info">
+                        <h3>Patient Details</h3>
+                        <div id="patient-summary"></div>
+                    </div>
+                    
+                    <div class="monitor-container">
+                        <h3>Vital Signs Monitor</h3>
+                        <div class="monitor">
+                            <div class="vital-box">
+                                <div class="vital-label">Heart Rate</div>
+                                <div id="pre-heart-rate" class="vital-value">-- bpm</div>
+                                <div id="pre-ecg" class="ecg-container"></div>
+                            </div>
+                            
+                            <div class="vital-box">
+                                <div class="vital-label">Blood Pressure</div>
+                                <div id="pre-bp" class="vital-value">--/-- mmHg</div>
+                            </div>
+                            
+                            <div class="vital-box">
+                                <div class="vital-label">Oxygen Saturation</div>
+                                <div id="pre-spo2" class="vital-value">--%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="notes-container">
+                        <h3>Pre-Op Notes</h3>
+                        <div id="pre-op-notes" class="notes"></div>
+                    </div>
+                </div>
+                
+                <div id="during-op" class="stage">
+                    <h2>During Operation</h2>
+                    <div class="stage-description">
+                        <p>The surgery is now in progress. Your vital signs are being closely monitored by the anesthesia team.</p>
+                    </div>
+                    
+                    <div class="monitor-container">
+                        <h3>Vital Signs Monitor</h3>
+                        <div class="monitor">
+                            <div class="vital-box">
+                                <div class="vital-label">Heart Rate</div>
+                                <div id="during-heart-rate" class="vital-value">-- bpm</div>
+                                <div id="during-ecg" class="ecg-container"></div>
+                            </div>
+                            
+                            <div class="vital-box">
+                                <div class="vital-label">Blood Pressure</div>
+                                <div id="during-bp" class="vital-value">--/-- mmHg</div>
+                            </div>
+                            
+                            <div class="vital-box">
+                                <div class="vital-label">Oxygen Saturation</div>
+                                <div id="during-spo2" class="vital-value">--%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="surgery-details">
+                        <h3>Surgery Progress</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div id="surgery-progress" class="progress"></div>
+                            </div>
+                            <div id="progress-time">Time elapsed: 0:00</div>
+                        </div>
+                    </div>
+                    
+                    <div class="notes-container">
+                        <h3>Surgical Notes</h3>
+                        <div id="during-op-notes" class="notes"></div>
+                    </div>
+                </div>
+                
+                <div id="post-op" class="stage">
+                    <h2>Post-Operation</h2>
+                    <div class="stage-description">
+                        <p>The surgery is complete and you are now in recovery. Your condition is being monitored as you wake from anesthesia.</p>
+                    </div>
+                    
+                    <div class="monitor-container">
+                        <h3>Vital Signs Monitor</h3>
+                        <div class="monitor">
+                            <div class="vital-box">
+                                <div class="vital-label">Heart Rate</div>
+                                <div id="post-heart-rate" class="vital-value">-- bpm</div>
+                                <div id="post-ecg" class="ecg-container"></div>
+                            </div>
+                            
+                            <div class="vital-box">
+                                <div class="vital-label">Blood Pressure</div>
+                                <div id="post-bp" class="vital-value">--/-- mmHg</div>
+                            </div>
+                            
+                            <div class="vital-box">
+                                <div class="vital-label">Oxygen Saturation</div>
+                                <div id="post-spo2" class="vital-value">--%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recovery-details">
+                        <h3>Recovery Status</h3>
+                        <div id="recovery-status"></div>
+                    </div>
+                    
+                    <div class="notes-container">
+                        <h3>Post-Op Notes</h3>
+                        <div id="post-op-notes" class="notes"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="outcome-container" style="display: none;">
+                <h2>Surgery Outcome</h2>
+                <div id="outcome-status"></div>
+                <div id="outcome-factors"></div>
+                <button id="restart-btn">Start Over</button>
+            </div>
         </section>
     </div>
     

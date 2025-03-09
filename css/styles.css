@@ -1,0 +1,830 @@
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Typography */
+h1, h2, h3 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #7f8c8d;
+}
+
+/* Header */
+header {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Form Styles */
+#input-section {
+    margin-bottom: 40px;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.intro-text {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+button:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* Journey Container */
+#journey-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Timeline Navigation */
+.navigation {
+    margin-bottom: 30px;
+}
+
+.timeline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+}
+
+.timeline-marker {
+    width: 40px;
+    height: 40px;
+    background: #bdc3c7;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+    transition: background 0.3s;
+}
+
+.timeline-step.active .timeline-marker {
+    background: #2ecc71;
+}
+
+.timeline-step.completed .timeline-marker {
+    background: #3498db;
+}
+
+.timeline-label {
+    font-weight: bold;
+}
+
+.timeline-line {
+    flex-grow: 1;
+    height: 4px;
+    background: #bdc3c7;
+    margin: 0 10px;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Stages */
+.stages {
+    position: relative;
+    min-height: 500px;
+}
+
+.stage {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+
+.stage.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.stage-description {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+/* Monitor Styles */
+.monitor-container {
+    margin-bottom: 30px;
+}
+
+.monitor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.vital-box {
+    background: #000;
+    width: 31%;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+}
+
+.vital-label {
+    color: #ddd;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.vital-value {
+    color: #4cd137;
+    font-size: 1.8rem;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.ecg-container {
+    height: 60px;
+    width: 100%;
+}
+
+/* Patient Info Styles */
+.patient-info {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+#patient-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.patient-detail {
+    padding: 8px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #7f8c8d;
+}
+
+/* Notes Container */
+.notes-container {
+    margin-bottom: 30px;
+}
+
+.notes {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #f39c12;
+    min-height: 100px;
+}
+
+/* Surgery Progress */
+.surgery-details {
+    margin-bottom: 30px;
+}
+
+.progress-container {
+    margin-top: 15px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #ecf0f1;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: #3498db;
+    width: 0%;
+    transition: width 1s;
+}
+
+/* Outcome Container */
+#outcome-container {
+    text-align: center;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 30px;
+    animation: fadeIn 0.5s;
+}
+
+#outcome-status {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.outcome-positive {
+    background: #d5f5e3;
+    color: #27ae60;
+}
+
+.outcome-negative {
+    background: #f5d5d5;
+    color: #c0392b;
+}
+
+#outcome-factors {
+    margin: 20px 0;
+}
+
+.factor {
+    margin: 10px 0;
+    padding: 10px;
+    background: #ecf0f1;
+    border-radius: 4px;
+}
+
+#restart-btn {
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .monitor {
+        flex-direction: column;
+    }
+    
+    .vital-box {
+        width: 100%;
+    }
+    
+    #patient-summary {
+        grid-template-columns: 1fr;
+    }
+}
+/* Add these styles to your styles.css file */
+
+/* Imperial Units Form Styling */
+.imperial-inputs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.imperial-inputs select {
+    width: auto;
+    min-width: 70px;
+}
+
+.height-group .imperial-inputs::after {
+    content: "(converts to cm)";
+    font-size: 0.8em;
+    color: #7f8c8d;
+    margin-left: 10px;
+}
+
+#weight-lb::after {
+    content: "(converts to kg)";
+    font-size: 0.8em;
+    color: #7f8c8d;
+    margin-left: 10px;
+}
+
+/* Disabled fields */
+select:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+/* Style for options with percentages */
+option.percentage-option {
+    font-style: italic;
+}
+
+/* Form field validation */
+input:invalid,
+select:invalid {
+    border-color: #e74c3c;
+}
+
+input:valid,
+select:valid {
+    border-color: #2ecc71;
+}
+
+/* Form field focus */
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Department-specific styling */
+.department-info {
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: #7f8c8d;
+    font-style: italic;
+}
+/* Add these styles to your styles.css file for improved outcome display */
+
+/* Outcome Container */
+#outcome-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    animation: fadeIn 0.8s;
+}
+
+/* Outcome Status */
+#outcome-status {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.outcome-positive, .outcome-negative {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    animation: pulseOnce 1s;
+}
+
+.outcome-positive {
+    background: #d5f5e3;
+    color: #27ae60;
+}
+
+.outcome-negative {
+    background: #f5d5d5;
+    color: #c0392b;
+}
+
+.outcome-detail {
+    font-size: 1.1rem;
+    margin: 15px 0;
+    line-height: 1.5;
+}
+
+/* Risk Levels */
+.very-high {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+.high {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.moderate {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+.low {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+/* Factors */
+#outcome-factors {
+    margin-top: 30px;
+}
+
+.factor {
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-left: 4px solid #3498db;
+    margin-bottom: 10px;
+    border-radius: 0 4px 4px 0;
+    animation: slideIn 0.5s;
+    animation-fill-mode: both;
+}
+
+.factor:nth-child(2) { animation-delay: 0.1s; }
+.factor:nth-child(3) { animation-delay: 0.2s; }
+.factor:nth-child(4) { animation-delay: 0.3s; }
+.factor:nth-child(5) { animation-delay: 0.4s; }
+
+/* Dataset Statistics */
+.dataset-stats-title {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.dataset-stats {
+    background: #f1f9fe;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #2c3e50;
+    margin-top: 15px;
+}
+
+.dataset-stats p {
+    margin: 8px 0;
+}
+
+/* Restart Button */
+#restart-btn {
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+    padding: 12px 25px;
+    border-radius: 4px;
+    margin-top: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.3s ease;
+}
+
+#restart-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Animations */
+@keyframes pulseOnce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+/* Add these styles to your styles.css file */
+
+/* Multi-step Form Styling */
+.step-section {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+
+.step-section.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.step-description {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.step-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+/* Introduction Section */
+.intro-content {
+    line-height: 1.6;
+}
+
+.dataset-info {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border-left: 4px solid #3498db;
+}
+
+.dataset-info h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.dataset-info ul {
+    padding-left: 20px;
+}
+
+.dataset-info li {
+    margin-bottom: 10px;
+}
+
+.citation {
+    font-size: 0.9rem;
+    padding: 15px;
+    background: #f1f9fe;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.citation h4 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+/* Buttons */
+.primary-btn {
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: block;
+    margin: 30px auto 0;
+    transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.back-btn, .next-btn {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.next-btn {
+    background: #3498db;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background: #f1f1f1;
+}
+
+.next-btn:hover {
+    background: #2980b9;
+}
+
+.next-btn:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* Department/Approach/Anesthesia Cards */
+.department-cards,
+.approach-cards,
+.anesthesia-cards,
+.asa-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.department-card,
+.approach-card,
+.anesthesia-card,
+.asa-card {
+    flex: 1;
+    min-width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.department-card:hover,
+.approach-card:hover,
+.anesthesia-card:hover,
+.asa-card:hover {
+    border-color: #3498db;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.department-card.selected,
+.approach-card.selected,
+.anesthesia-card.selected,
+.asa-card.selected {
+    border-color: #3498db;
+    background-color: #ebf7fe;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+}
+
+.department-card h3,
+.approach-card h3,
+.anesthesia-card h3,
+.asa-card h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.department-card p,
+.approach-card p,
+.anesthesia-card p,
+.asa-card p {
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.department-card .stat,
+.approach-card .stat,
+.anesthesia-card .stat {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 10px;
+}
+
+.department-description,
+.approach-description,
+.anesthesia-description {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 20px;
+    border-left: 4px solid #f39c12;
+}
+
+/* Patient Summary */
+.patient-summary {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.patient-summary h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.summary-label {
+    font-weight: bold;
+    color: #7f8c8d;
+}
+
+.summary-value {
+    color: #2c3e50;
+}
+
+.journey-begin {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.journey-begin h3 {
+    color: #2c3e50;
+}
+
+/* Responsive Design for Cards */
+@media (max-width: 768px) {
+    .department-cards,
+    .approach-cards,
+    .anesthesia-cards,
+    .asa-cards {
+        flex-direction: column;
+    }
+    
+    .department-card,
+    .approach-card,
+    .anesthesia-card,
+    .asa-card {
+        min-width: auto;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
