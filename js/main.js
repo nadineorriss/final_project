@@ -859,6 +859,7 @@ function calculateComplicationRisk(patientData, outcome) {
 
 /**
  * Show the surgical outcome
+ * Updated to remove average hospital stay from dataset statistics
  */
 function showOutcome() {
     console.log("Showing outcome", outcome);
@@ -914,13 +915,12 @@ function showOutcome() {
             factorsContainer.appendChild(factorElem);
         });
         
-        // Add dataset statistics
+        // Add dataset statistics (without average hospital stay)
         factorsContainer.innerHTML += `
             <h3 class="dataset-stats-title">Dataset Statistics</h3>
             <div class="dataset-stats">
                 <p>Based on ${similarPatients.length} similar patients in the Korean healthcare dataset</p>
                 <p>Overall mortality rate in similar cases: ${(calculateMortalityRate(similarPatients) * 100).toFixed(1)}%</p>
-                <p>Average hospital stay: ${calculateAverageLOS(similarPatients)} days</p>
             </div>
         `;
     }
@@ -1877,6 +1877,7 @@ function updatePatientSummary() {
 
 /**
  * Process the collected form data and start the journey
+ * Fixed to ensure proper loading of pre-op stage
  */
 function processFormData() {
     console.log("Processing form data", patientFormData);
@@ -1906,7 +1907,16 @@ function processFormData() {
     
     // Hide the multi-step form and show the journey
     hideAllStepSections();
-    document.getElementById('journey-container').style.display = 'block';
+    
+    // Show the journey container
+    const journeyContainer = document.getElementById('journey-container');
+    if (journeyContainer) {
+        journeyContainer.style.display = 'block';
+    }
+    
+    // Set the current stage to pre-op and explicitly update UI
+    currentStage = 'pre';
+    updateStageUI('pre');
     
     // Display patient summary
     displayPatientSummary();
@@ -1971,6 +1981,7 @@ function initialize() {
 
 /**
  * Restart the journey from the beginning
+ * Updated version that properly resets the form
  */
 function restartJourney() {
     console.log("Restarting journey");
@@ -2014,9 +2025,28 @@ function restartJourney() {
         navigationContainer.style.display = 'flex';
     }
     
-    // Show intro section
+    // Reset all step sections to invisible
     document.querySelectorAll('.step-section').forEach(section => {
-        section.style.display = 'block';
+        section.classList.remove('active');
+        section.style.display = 'none';
     });
-    navigateToStep('intro-section');
+    
+    // Reset form inputs
+    document.getElementById('age').value = '';
+    document.getElementById('sex').value = '';
+    document.getElementById('feet').value = '';
+    document.getElementById('inches').value = '';
+    document.getElementById('weight-lb').value = '';
+    
+    // Reset card selections
+    document.querySelectorAll('.department-card, .approach-card, .anesthesia-card, .asa-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    
+    // Show only intro section
+    const introSection = document.getElementById('intro-section');
+    if (introSection) {
+        introSection.classList.add('active');
+        introSection.style.display = 'block';
+    }
 }
