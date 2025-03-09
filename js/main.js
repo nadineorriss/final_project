@@ -971,50 +971,93 @@ function calculateAverageLOS(patients) {
     }
 }
 
-/**
- * Restart the surgical journey
- */
 function restartJourney() {
     console.log("Restarting journey");
     
-    // Reset the state
-    patientData = {};
-    surgicalJourney = {
-        pre: { heartRate: null, bloodPressure: null, oxygenSaturation: null, narrative: null },
-        during: { heartRate: null, bloodPressure: null, oxygenSaturation: null, narrative: null },
-        post: { heartRate: null, bloodPressure: null, oxygenSaturation: null, narrative: null }
-    };
-    similarPatients = [];
-    currentStage = 'pre';
-    outcome = null;
+    // The simplest and most reliable way to restart is to reload the page
+    window.location.reload();
+}
+/**
+ * Initialize multi-step form navigation and events
+ * Updated version with robust event listener management
+ */
+function initializeMultiStepForm() {
+    console.log("Initializing multi-step form");
     
-    const inputSection = document.getElementById('input-section');
-    const journeyContainer = document.getElementById('journey-container');
-    const stagesContainer = document.querySelector('.stages');
-    const navigationContainer = document.querySelector('.navigation');
-    const outcomeContainer = document.getElementById('outcome-container');
+    // Step navigation
+    setupStepNavigation();
     
-    if (inputSection && journeyContainer && stagesContainer && navigationContainer) {
-        // Show the input section and hide other sections
-        inputSection.style.display = 'block';
-        journeyContainer.style.display = 'none';
-        stagesContainer.style.display = 'block';
-        navigationContainer.style.display = 'flex';
+    // Start journey button - with proper event listener cleanup
+    const startJourneyBtn = document.getElementById('start-journey-btn');
+    if (startJourneyBtn) {
+        // Remove old listeners if any
+        const newBtn = startJourneyBtn.cloneNode(true);
+        startJourneyBtn.parentNode.replaceChild(newBtn, startJourneyBtn);
         
-        if (outcomeContainer) {
-            outcomeContainer.style.display = 'none';
-        }
+        // Add fresh listener
+        newBtn.addEventListener('click', function() {
+            console.log("Start journey button clicked");
+            navigateToStep('age-section');
+        });
+    }
+    
+    // Dynamic content generation
+    setupDepartmentSection();
+    setupApproachSection();
+    setupAnesthesiaSection();
+    setupASASection();
+    
+    // Final submit button - with proper event listener cleanup
+    const beginVisualizationBtn = document.getElementById('begin-visualization-btn');
+    if (beginVisualizationBtn) {
+        // Remove old listeners if any
+        const newBtn = beginVisualizationBtn.cloneNode(true);
+        beginVisualizationBtn.parentNode.replaceChild(newBtn, beginVisualizationBtn);
         
-        // Reset the form
-        const patientForm = document.getElementById('patient-form');
-        if (patientForm) {
-            patientForm.reset();
-        }
-    } else {
-        console.error("Required containers not found for restart");
+        // Add fresh listener
+        newBtn.addEventListener('click', function() {
+            console.log("Begin visualization button clicked");
+            processFormData();
+        });
     }
 }
-// Add these functions to your main.js file
+
+/**
+ * Navigate to a specific step - with better error handling
+ * @param {string} stepId - The ID of the step to navigate to
+ */
+function navigateToStep(stepId) {
+    console.log(`Navigating to step: ${stepId}`);
+    
+    // Validate step exists
+    const targetStep = document.getElementById(stepId);
+    if (!targetStep) {
+        console.error(`Step not found: ${stepId}`);
+        return;
+    }
+    
+    // Hide all steps
+    const allSteps = document.querySelectorAll('.step-section');
+    allSteps.forEach(step => {
+        step.classList.remove('active');
+        step.style.display = 'none';
+    });
+    
+    // Show the target step
+    targetStep.classList.add('active');
+    targetStep.style.display = 'block';
+    window.scrollTo(0, 0);
+    
+    // Special case for department step
+    if (stepId === 'department-section') {
+        updateDepartmentOptions();
+    }
+    
+    // Update patient summary in final step
+    if (stepId === 'summary-section') {
+        updatePatientSummary();
+    }
+}
 
 /**
  * Department-specific data constraints based on the dataset
@@ -1977,76 +2020,4 @@ function initialize() {
     }
     
     console.log('Surgical Journey Visualization initialized');
-}
-
-/**
- * Restart the journey from the beginning
- * Updated version that properly resets the form
- */
-function restartJourney() {
-    console.log("Restarting journey");
-    
-    // Reset the state
-    patientData = {};
-    patientFormData = {
-        age: null,
-        sex: null,
-        height: null,
-        weight: null,
-        bmi: null,
-        department: null,
-        approach: null,
-        ane_type: null,
-        asa: null
-    };
-    
-    surgicalJourney = {
-        pre: { heartRate: null, bloodPressure: null, oxygenSaturation: null, narrative: null },
-        during: { heartRate: null, bloodPressure: null, oxygenSaturation: null, narrative: null },
-        post: { heartRate: null, bloodPressure: null, oxygenSaturation: null, narrative: null }
-    };
-    
-    similarPatients = [];
-    currentStage = 'pre';
-    outcome = null;
-    
-    // Hide journey and outcome containers
-    document.getElementById('journey-container').style.display = 'none';
-    const outcomeContainer = document.getElementById('outcome-container');
-    if (outcomeContainer) {
-        outcomeContainer.style.display = 'none';
-    }
-    
-    // Reset stages display
-    const stagesContainer = document.querySelector('.stages');
-    const navigationContainer = document.querySelector('.navigation');
-    if (stagesContainer && navigationContainer) {
-        stagesContainer.style.display = 'block';
-        navigationContainer.style.display = 'flex';
-    }
-    
-    // Reset all step sections to invisible
-    document.querySelectorAll('.step-section').forEach(section => {
-        section.classList.remove('active');
-        section.style.display = 'none';
-    });
-    
-    // Reset form inputs
-    document.getElementById('age').value = '';
-    document.getElementById('sex').value = '';
-    document.getElementById('feet').value = '';
-    document.getElementById('inches').value = '';
-    document.getElementById('weight-lb').value = '';
-    
-    // Reset card selections
-    document.querySelectorAll('.department-card, .approach-card, .anesthesia-card, .asa-card').forEach(card => {
-        card.classList.remove('selected');
-    });
-    
-    // Show only intro section
-    const introSection = document.getElementById('intro-section');
-    if (introSection) {
-        introSection.classList.add('active');
-        introSection.style.display = 'block';
-    }
 }
